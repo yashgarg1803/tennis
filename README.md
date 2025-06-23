@@ -1,7 +1,5 @@
 # Sequential, Single Battlefield Blotto Game (Tennis)
 
-[The Tennis Website](tennis-cy2x.vercel.app)
-
 A multiplayer web-based implementation of the Sequential Blotto game built with Next.js, TypeScript, and Supabase.
 
 ## Features
