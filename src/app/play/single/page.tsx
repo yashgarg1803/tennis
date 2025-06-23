@@ -1,15 +1,15 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { SequentialBlottoGame, createGame, DEFAULT_GAME_CONFIG, GameConfig } from '@/lib/game'
+import { useState } from 'react'
+import { SequentialBlottoGame, createGame, DEFAULT_GAME_CONFIG, GameConfig, GameState } from '@/lib/game'
 import { saveGameResult } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
-import { Shield, Trophy, Target, ArrowRight, RotateCcw, Home, Settings } from 'lucide-react'
+import { Shield, Target, ArrowRight, RotateCcw, Home, Settings } from 'lucide-react'
 import Link from 'next/link'
 
 export default function SinglePlayerGame() {
   const [game, setGame] = useState<SequentialBlottoGame | null>(null)
-  const [gameState, setGameState] = useState<any>(null)
+  const [gameState, setGameState] = useState<GameState | null>(null)
   const [playerTroops, setPlayerTroops] = useState<number>(0)
   const [isWaitingForBot, setIsWaitingForBot] = useState(false)
   const [gameConfig, setGameConfig] = useState<GameConfig>(DEFAULT_GAME_CONFIG)
@@ -82,7 +82,7 @@ export default function SinglePlayerGame() {
   }
 
   const handleDeploy = () => {
-    if (playerTroops >= 0 && playerTroops <= gameState?.player1.troops) {
+    if (gameState?.player1?.troops !== undefined && playerTroops >= 0 && playerTroops <= gameState.player1.troops) {
       makeMove(playerTroops)
       setPlayerTroops(0)
     }
@@ -143,7 +143,7 @@ export default function SinglePlayerGame() {
                 </div>
                 <p className="text-sm text-secondary">
                   Each player starts with {gameConfig.startingTroops} troops. Choose wisely - 
-                  you'll need to manage these troops throughout the entire game!
+                  you&apos;ll need to manage these troops throughout the entire game!
                 </p>
               </div>
 
@@ -161,7 +161,7 @@ export default function SinglePlayerGame() {
                   </div>
                   <div className="flex items-start gap-2">
                     <span style={{ color: '#f59e0b', marginTop: '2px' }}>•</span>
-                    <span className="text-sm">If tied, it's a draw (no one wins, troops are still lost)</span>
+                    <span className="text-sm">If tied, it&apos;s a draw (no one wins, troops are still lost)</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span style={{ color: '#ef4444', marginTop: '2px' }}>•</span>
@@ -191,7 +191,6 @@ export default function SinglePlayerGame() {
   }
 
   const isGameFinished = gameState.status === 'finished'
-  const currentRound = gameState.rounds[gameState.rounds.length - 1]
   const isPlayerTurn = gameState.status === 'playing' && !isWaitingForBot
 
   return (

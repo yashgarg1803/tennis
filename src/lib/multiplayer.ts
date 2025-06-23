@@ -155,7 +155,7 @@ export async function joinGameRoom(roomCode: string, playerId: string, playerNam
   console.log('Joining room...')
 
   // Join the room
-  const updateData = {
+  const updateData: any = {
     player2_id: playerId,
     player2_name: playerName,
     updated_at: new Date().toISOString()
@@ -282,11 +282,9 @@ export async function makeMove(roomId: string, move: Omit<PlayerMove, 'id'>): Pr
     timestamp: move.timestamp
   }
 
-  const { data: insertedMove, error: insertError } = await supabase
+  const { error: insertError } = await supabase
     .from('game_moves')
     .insert(moveData)
-    .select()
-    .single()
 
   if (insertError) {
     console.error('Error inserting move:', insertError)
@@ -353,16 +351,17 @@ async function ensureGameStateConsistency(roomId: string): Promise<SequentialBlo
   }
 
   // Get or create game instance
-  let game = activeGames.get(roomId)
+  const game = activeGames.get(roomId)
   if (!game) {
     // Create new game instance
-    game = createGame(
+    const newGame = createGame(
       { id: roomData.player1_id, name: roomData.player1_name },
       { id: roomData.player2_id, name: roomData.player2_name },
       roomData.config
     )
-    game.startGame()
-    activeGames.set(roomId, game)
+    newGame.startGame()
+    activeGames.set(roomId, newGame)
+    return newGame
   }
 
   // Always restore from database to ensure consistency
@@ -401,7 +400,7 @@ async function resolveRound(roomId: string, roundNumber: number): Promise<void> 
   }
 
   // Get or restore game instance
-  let game = await ensureGameStateConsistency(roomId)
+  const game = await ensureGameStateConsistency(roomId)
   
   if (!game) {
     console.error('Failed to ensure game state consistency')
@@ -623,7 +622,7 @@ export async function leaveRoom(roomId: string, playerId: string): Promise<boole
     return false
   }
 
-  let updateData: any = { updated_at: new Date().toISOString() }
+  const updateData: any = { updated_at: new Date().toISOString() }
 
   if (roomData.player1_id === playerId) {
     updateData.player1_id = null

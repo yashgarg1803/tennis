@@ -92,7 +92,7 @@ export default function Home() {
                 </div>
                 <h3 className="card-title">Win Battles</h3>
                 <p className="card-description">
-                  Whoever sends more troops wins the round. If tied, it's a draw. 
+                  Whoever sends more troops wins the round. If tied, it&apos;s a draw. 
                   Win 3 more rounds than your opponent to claim victory.
                 </p>
               </div>
@@ -106,7 +106,7 @@ export default function Home() {
                 <h3 className="card-title">Manage Resources</h3>
                 <p className="card-description">
                   Troops used in each round are permanently lost. When you reach zero troops, 
-                  you can't deploy anymore, but you might still win!
+                  you can&apos;t deploy anymore, but you might still win!
                 </p>
               </div>
             </div>

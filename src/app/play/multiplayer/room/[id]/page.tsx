@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { Shield, Trophy, Target, ArrowRight, RotateCcw, Home, Copy, Check, Users, Clock } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
-import { getRoom, makeMove, startGame, leaveRoom, GameRoom, joinGameRoom, getRoomByCode, refreshGameState, isPlayerTurn, getRoundStatus } from '@/lib/multiplayer'
+import { makeMove, startGame, leaveRoom, GameRoom, joinGameRoom, getRoomByCode, isPlayerTurn, getRoundStatus } from '@/lib/multiplayer'
 
 export default function MultiplayerRoom() {
   const params = useParams()
@@ -167,7 +167,6 @@ export default function MultiplayerRoom() {
   }
 
   const isHost = room.player1?.id === user?.id
-  const isPlayer2 = room.player2?.id === user?.id
   const gameState = room.gameState
   const isGameFinished = room.status === 'finished'
 

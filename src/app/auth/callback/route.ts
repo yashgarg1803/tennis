@@ -16,17 +16,17 @@ export async function GET(request: NextRequest) {
           get(name: string) {
             return cookieStore.get(name)?.value
           },
-          set(name: string, value: string, options: any) {
+          set(name: string, value: string, options: Record<string, unknown>) {
             try {
               cookieStore.set({ name, value, ...options })
-            } catch (error) {
+            } catch {
               // Handle cookie setting error
             }
           },
-          remove(name: string, options: any) {
+          remove(name: string, options: Record<string, unknown>) {
             try {
               cookieStore.set({ name, value: '', ...options })
-            } catch (error) {
+            } catch {
               // Handle cookie removal error
             }
           },
@@ -36,8 +36,8 @@ export async function GET(request: NextRequest) {
     
     try {
       await supabase.auth.exchangeCodeForSession(code)
-    } catch (error) {
-      console.error('Error exchanging code for session:', error)
+    } catch {
+      console.error('Error exchanging code for session')
     }
   }
 

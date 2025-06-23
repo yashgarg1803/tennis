@@ -1,13 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import { Shield, Users, Mail, Lock, Home, LogIn } from 'lucide-react'
+import { Shield, Users, Home } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function AuthPage() {
-  const { user, loading, signInWithGoogle, signOut } = useAuth()
+  const { user, loading, signInWithGoogle } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
@@ -77,7 +77,7 @@ export default function AuthPage() {
           <div className="card-header">
             <h3 className="card-title">Account Features</h3>
             <p className="card-description">
-              What you'll get with an account
+              What you&apos;ll get with an account
             </p>
           </div>
           <div className="card-content">

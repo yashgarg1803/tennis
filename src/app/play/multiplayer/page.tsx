@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Users, Plus, Link as LinkIcon, Home, Settings, Copy, Check } from 'lucide-react'
+import { Users, Plus, Link as LinkIcon, Home } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import { createGameRoom, joinGameRoom, GameConfig, DEFAULT_GAME_CONFIG } from '@/lib/multiplayer'
@@ -14,7 +14,6 @@ export default function MultiplayerPage() {
   const [gameConfig, setGameConfig] = useState<GameConfig>(DEFAULT_GAME_CONFIG)
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [showJoinForm, setShowJoinForm] = useState(false)
-  const [copied, setCopied] = useState(false)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
@@ -76,12 +75,6 @@ export default function MultiplayerPage() {
     } finally {
       setIsLoading(false)
     }
-  }
-
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
   }
 
   if (loading) {

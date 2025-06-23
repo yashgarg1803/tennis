@@ -117,7 +117,7 @@ export default function PlayMenu() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <h4 className="font-semibold">💀 Manage Resources</h4>
                 <p className="text-secondary text-sm">
-                  Troops used in each round are permanently lost. When you reach zero troops, you can't deploy anymore.
+                  Troops used in each round are permanently lost. When you reach zero troops, you can&apos;t deploy anymore.
                 </p>
               </div>
             </div>
